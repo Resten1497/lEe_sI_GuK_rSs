@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Resten1497/lEe_sI_GuK_rSs#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "request": "^2.88.0",
+    "xml2js": "^0.4.22"
   }
 }

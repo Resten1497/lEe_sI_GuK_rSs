@@ -1,51 +1,20 @@
-// let express = require('express');
-// let app = express();
+let express = require('express');
+const request = require('request');
+var parseString = require('xml2js').parseString;
 
-// app.get('/', function (req, res) {
-//   res.send('Hello World!');
-// });
+let app = express();
 
-// app.listen(3000, function () {
-//   console.log('Example app listening on port 3000!');
-// });
 
-// 일급 함수 
-// 변수에 함수넣기 
-let a = (a,b) => { return a+b }
-
-//console.log(a(2,4))
-function add(a){
-    return function(b){
-        return a+b
+const responseTitle = (res) => {
+    return function(link) {
+        request(`https://news.yahoo.co.jp/pickup/${link}/rss.xml`, function (error, response, body) {
+        parseString(body,(err,result)=>{
+        res.json(findPPAP(result.rss.channel[0].item,logTitle,checkTitle ))
+         }) 
+    });
     }
 }
 
-let base2 = add(2); //리턴된 function을 가지는 함수 -> a는 클로저
-console.log(add(1)) // 해당 코드 실행시 함수 반환
-console.log(base2(5))
-// 안에서 바깥 요소를 접근할수 있으면 클로저
-
-let temp = {'a':0};  // 객체
-
-console.log(temp['a'])
-
-temp['b'] = 10
-console.log(temp.b)
-
-console.log("////////////////////////////////////////////\n")
-
-let student = [
-    {name: 'man', age: 10},
-    {name: 'wow', age: 57},
-    {name: 'restern', age: 20},
-    {name: 'fume', age: 19}
-]
-
-function mappap(array, iteratee){
-    for(let i = 0; i < array.length ; i++){
-        iteratee(array[i])
-    }
-}
 
 function findPPAP(array,iteratee,predicate){
     let result = [];
@@ -55,13 +24,24 @@ function findPPAP(array,iteratee,predicate){
     return result;
 }
 
-function logName(arrayKey){
-    return arrayKey.name
+function logTitle(arrayKey){
+    return arrayKey.title
 }
 
-function logAge(arrayKey){
+function checkTitle(arrayKey){
 
-   return arrayKey.age <= 19 ? true : false;
+   return !!arrayKey.title
+    // 타이틀이있으면 ture, 없으면 false
 }
 
-console.log(findPPAP(student,logName,logAge))
+
+
+app.get('/', function (req, res) {
+    
+    responseTitle(res)('computer')
+});
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
+});
+
