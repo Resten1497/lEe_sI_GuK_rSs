@@ -1,0 +1,23 @@
+{
+  "name": "rss",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Resten1497/lEe_sI_GuK_rSs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Resten1497/lEe_sI_GuK_rSs/issues"
+  },
+  "homepage": "https://github.com/Resten1497/lEe_sI_GuK_rSs#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
